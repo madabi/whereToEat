@@ -1,31 +1,58 @@
 var map;
 
 jQuery(document).ready(function(){
-    $('#Who').hide();
-    $('#What').hide(); 
+
+    var whoButton = $('#who_button');
+    var whereButton = $('#where_button');
+    var whatButton = $('#what_button');
+    var goButton = $('#go_button');
+
+    var what = $('#What');
+    var where = $('#Where');
+    var who = $('#Who');
+
+
+    $(what).hide();
+    $(who).hide();
     
-    $('#where_button').on('click', function(){
-        $('#What').hide();
-        $('#Who').hide();
-        $('#Where').show();
+    whereButton.on('click', function(){
+        what.hide();
+        who.hide();
+        where.show();
+        setActive(this);
     });
     
-    $('#what_button').on('click', function(){
-        $('#Where').hide();
-        $('#Who').hide();
-        $('#What').show();
+    whatButton.on('click', function(){
+        what.show();
+        who.hide();
+        where.hide();
+        setActive(this);
     });
         
-    $('#who_button').on('click', function(){
-        $('#What').hide();
-        $('#Where').hide();
-        $('#Who').show();
+    whoButton.on('click', function(){
+        what.hide();
+        who.show();
+        where.hide();
+        setActive(this);
+    });
+
+    goButton.on('click', function(){
+        what.hide();
+        where.show();
+        who.hide();
+        setActive(whereButton);
     });
 
 initMap();
 
 
 });
+
+function setActive(button){
+    $('nav').find('button').css('background-color', 'lightgrey');
+    $(button).css('background-color', 'palegreen');
+}
+
 
 
 function initMap() {
