@@ -6,19 +6,22 @@ jQuery(document).ready(function(){
         $('#What').hide();
         $('#Who').hide();
         $('#Where').show();
-    })
+    });
     
     $('#what_button').on('click', function(){
         $('#Where').hide();
         $('#Who').hide();
         $('#What').show();
-    })
+    });
         
     $('#who_button').on('click', function(){
         $('#What').hide();
         $('#Where').hide();
         $('#Who').show();
-    })    
-    
+    });
+
+
+
+
 });
 

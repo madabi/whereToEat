@@ -4,18 +4,23 @@
         <title>Where to eat</title>
         <meta charset="UTF-8">
         <link type="text/css" href="home.css" rel="stylesheet">
+
+        <script src="lib/jquery-2.2.2.min.js"></script>
+        <script src="javascript/app.js"></script>
     </head>
     
     <body>
         
     <section id="Where">
-        <img src="pictures/map_test.jpg">
+       <!-- <img src="pictures/map_test.jpg"> -->
+        <div id="map"></div>
     </section>
     
     <section id="Who">
         Hier kommt die Liste mit den Restaurants
+
     </section>
-    
+
     <section id="What">
         Hier kann man das Essen auswählen
         <button id="go_button">Go</button>
@@ -27,7 +32,20 @@
         <button id="what_button">What</button>
     </nav>
     
-    <script src="lib/jquery-2.2.2.min.js"></script>
-    <script src="javascript/app.js"></script>
+
+    <script type="text/javascript">
+
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
+            });
+        }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLSKeV46vxnxZsWEf_HLJ8XukaLhI1r7o&callback=initMap">
+    </script>
     </body>
 </html>
