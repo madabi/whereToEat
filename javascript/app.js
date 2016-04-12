@@ -12,34 +12,26 @@ jQuery(document).ready(function(){
     var who = $('#Who');
 
 
-    $(what).hide();
-    $(who).hide();
+    showSection(where);
+    setActive(whereButton);
     
     whereButton.on('click', function(){
-        what.hide();
-        who.hide();
-        where.show();
+        showSection(where);
         setActive(this);
     });
     
     whatButton.on('click', function(){
-        what.show();
-        who.hide();
-        where.hide();
+        showSection(what);
         setActive(this);
     });
         
     whoButton.on('click', function(){
-        what.hide();
-        who.show();
-        where.hide();
+        showSection(who);
         setActive(this);
     });
 
     goButton.on('click', function(){
-        what.hide();
-        where.show();
-        who.hide();
+        showSection(where);
         setActive(whereButton);
     });
 
@@ -53,6 +45,10 @@ function setActive(button){
     $(button).css('background-color', 'palegreen');
 }
 
+function showSection(section){
+    $('section').hide();
+    section.show();
+}
 
 
 function initMap() {
