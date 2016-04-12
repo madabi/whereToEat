@@ -5,8 +5,6 @@
         <meta charset="UTF-8">
         <link type="text/css" href="home.css" rel="stylesheet">
 
-        <script src="lib/jquery-2.2.2.min.js"></script>
-        <script src="javascript/app.js"></script>
     </head>
     
     <body>
@@ -31,19 +29,11 @@
         <button id="who_button">Who</button>
         <button id="what_button">What</button>
     </nav>
-    
 
-    <script type="text/javascript">
 
-        var map;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 8
-            });
-        }
-
-    </script>
+    <script src="lib/jquery-2.2.2.min.js"></script>
+    <script src="javascript/app.js"></script>
+    <script src="javascript/gmaps.js"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLSKeV46vxnxZsWEf_HLJ8XukaLhI1r7o&callback=initMap">
     </script>
