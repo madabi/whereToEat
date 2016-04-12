@@ -2,15 +2,28 @@ body {
     background: lightgrey;
 }
 
+html, body, section {
+    height: 90%;
+    margin: 0px;
+    padding:0px;
+}
+
+#map {
+    height: 100%;
+}
+
 ul {
     list-style-type: none;
 }
 
-section{
-    padding:10px;
+nav {
+    position: fixed;
+    bottom: 10px;
 }
 
-
+button {
+    width: 100px;
+}
 
 /* Hervorhebung durch Ränder*/
 ul {
