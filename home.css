@@ -1,0 +1,22 @@
+body {
+    background: lightgrey;
+}
+
+ul {
+    list-style-type: none;
+}
+
+section{
+    padding:10px;
+}
+
+
+
+/* Hervorhebung durch Ränder*/
+ul {
+    border: 2px solid blue;
+}
+
+section {
+    border: 2px solid green;
+}
