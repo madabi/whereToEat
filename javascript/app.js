@@ -99,6 +99,8 @@ function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
+            var restaurant = $('<p>'+i+'</p>');
+            $('#Who').append(restaurant);
         }
     }
 }
