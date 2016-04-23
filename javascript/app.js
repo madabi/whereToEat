@@ -11,7 +11,7 @@ jQuery(document).ready(function(){
     var what = $('#What');
     var where = $('#Where');
     var who = $('#Who');
-
+    var map;
 
     showSection(where);
     setActive(whereButton);
@@ -34,19 +34,15 @@ jQuery(document).ready(function(){
     goButton.on('click', function(){
         var foodType= $(this).closest('section').find('fieldset').children(':radio:checked').val();
 
-
-
         showSection(where);
         setActive(whereButton);
 
     });
 
-initMap();
+    initMap();
 
 
 });
-
-
 
 function setActive(button){
     $('nav').find('button').css('background-color', 'lightgrey');
@@ -58,10 +54,9 @@ function showSection(section){
     section.show();
 }
 
-
 function initMap() {
     var pyrmont = {lat: -33.867, lng: 151.195};
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         center: pyrmont, //<-------- !!
         zoom: 18
     });
