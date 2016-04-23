@@ -91,7 +91,7 @@ function initMap() {
     service.nearbySearch({
         location: pyrmont, //<----- !!
         radius: 500,
-        types: ['store']
+        types: ['restaurant']
     }, callback);
 }
 
@@ -99,7 +99,7 @@ function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
-            var restaurant = $('<p>'+i+'</p>');
+            var restaurant = $('<p>'+results[i].name+'</p>');
             $('#Who').append(restaurant);
         }
     }
