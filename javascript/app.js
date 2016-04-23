@@ -12,6 +12,8 @@ jQuery(document).ready(function(){
     var where = $('#Where');
     var who = $('#Who');
     var map;
+    var pyrmont;
+    var service;
 
     showSection(where);
     setActive(whereButton);
@@ -33,14 +35,21 @@ jQuery(document).ready(function(){
 
     goButton.on('click', function(){
         var foodType= $(this).closest('section').find('fieldset').children(':radio:checked').val();
-
+        console.log(foodType);
         showSection(where);
         setActive(whereButton);
-
+        if(document.getElementById('it').checked) {
+            initMap('italienisch');
+        } else if (document.getElementById('ch').checked) {
+            initMap('chinesisch');
+        } else if(document.getElementById('in').checked) {
+            initMap('indisch');
+        } else {
+            initMap('');
+        }
     });
 
-    initMap();
-
+    initMap('');
 
 });
 
@@ -54,14 +63,13 @@ function showSection(section){
     section.show();
 }
 
-function initMap() {
-    var pyrmont = {lat: -33.867, lng: 151.195};
+function initMap(foodtype) {
+    pyrmont = {lat: -33.867, lng: 151.195};
     map = new google.maps.Map(document.getElementById('map'), {
         center: pyrmont, //<-------- !!
-        zoom: 18
+        zoom: 15
     });
     infowindow = new google.maps.InfoWindow();
-
 
     // Try HTML5 geolocation.
     /*if (navigator.geolocation) {
@@ -81,12 +89,35 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }*/
+    service = new google.maps.places.PlacesService(map);
+    console.log(foodtype);
+    if (foodtype === 'chinesisch'){
+        searchFor('chinese');
+    } else if (foodtype === 'italienisch') {
+        searchFor('italian');
+    } else if (foodtype === 'indisch') {
+        searchFor('indian');
+    } else{
+        displayDefault();
+    }
+    console.log("nachher");
 
-    var service = new google.maps.places.PlacesService(map);
-    service.nearbySearch({
+}
+
+function displayDefault(){
+        service.nearbySearch({
         location: pyrmont, //<----- !!
-        radius: 500,
+        radius: 300,
         types: ['restaurant']
+    }, callback);
+}
+
+function searchFor(foodtype){
+        service.nearbySearch({
+        location: pyrmont, //<----- !!
+        radius: 300,
+        types: ['restaurant'],
+        keyword: foodtype
     }, callback);
 }
 
