@@ -1,5 +1,7 @@
 var map;
 var infowindow;
+var startLocation;
+var service;
 
 jQuery(document).ready(function(){
 
@@ -11,9 +13,6 @@ jQuery(document).ready(function(){
     var what = $('#What');
     var where = $('#Where');
     var who = $('#Who');
-    var map;
-    var pyrmont;
-    var service;
 
     showSection(where);
     setActive(whereButton);
@@ -69,13 +68,23 @@ function showSection(section){
 }
 
 function initMap(foodtype) {
-    pyrmont = {lat: -33.867, lng: 151.195};
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: pyrmont, //<-------- !!
-        zoom: 16
-    });
-    infowindow = new google.maps.InfoWindow();
+    var pyrmont = {lat: -33.867, lng: 151.195};
+    var basel = {lat: 47.559417, lng:7.584503 };
 
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: basel, //<-------- !!
+        zoom: 14
+    });
+        
+    if (navigator.geolocation) {
+        startLocation = basel;
+    } else {
+        startLocation = pyrmont;
+    }
+    map.setCenter(startLocation);
+
+    infowindow = new google.maps.InfoWindow();
+    
     // Try HTML5 geolocation.
     /*if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -94,6 +103,7 @@ function initMap(foodtype) {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }*/
+    
     service = new google.maps.places.PlacesService(map);
 
     if (foodtype === 'chinesisch'){
@@ -110,15 +120,15 @@ function initMap(foodtype) {
 
 function displayDefault(){
         service.nearbySearch({
-        location: pyrmont, //<----- !!
-        radius: 300,
+        location: startLocation, //<----- !!
+        radius: 400,
         types: ['restaurant']
     }, callback);
 }
 
 function searchFor(foodtype){
         service.nearbySearch({
-        location: pyrmont, //<----- !!
+        location: startLocation, //<----- !!
         radius: 400,
         types: ['restaurant'],
         keyword: foodtype
