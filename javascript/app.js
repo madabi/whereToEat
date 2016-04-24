@@ -35,16 +35,21 @@ jQuery(document).ready(function(){
 
     goButton.on('click', function(){
         var foodType= $(this).closest('section').find('fieldset').children(':radio:checked').val();
-        console.log(foodType);
+
         showSection(where);
         setActive(whereButton);
+        
         if(document.getElementById('it').checked) {
+            removePreviousResults();
             initMap('italienisch');
         } else if (document.getElementById('ch').checked) {
+            removePreviousResults();
             initMap('chinesisch');
         } else if(document.getElementById('in').checked) {
+            removePreviousResults();
             initMap('indisch');
         } else {
+            removePreviousResults();
             initMap('');
         }
     });
@@ -67,7 +72,7 @@ function initMap(foodtype) {
     pyrmont = {lat: -33.867, lng: 151.195};
     map = new google.maps.Map(document.getElementById('map'), {
         center: pyrmont, //<-------- !!
-        zoom: 15
+        zoom: 16
     });
     infowindow = new google.maps.InfoWindow();
 
@@ -90,7 +95,7 @@ function initMap(foodtype) {
         handleLocationError(false, infoWindow, map.getCenter());
     }*/
     service = new google.maps.places.PlacesService(map);
-    console.log(foodtype);
+
     if (foodtype === 'chinesisch'){
         searchFor('chinese');
     } else if (foodtype === 'italienisch') {
@@ -100,7 +105,6 @@ function initMap(foodtype) {
     } else{
         displayDefault();
     }
-    console.log("nachher");
 
 }
 
@@ -115,10 +119,14 @@ function displayDefault(){
 function searchFor(foodtype){
         service.nearbySearch({
         location: pyrmont, //<----- !!
-        radius: 300,
+        radius: 400,
         types: ['restaurant'],
         keyword: foodtype
     }, callback);
+}
+
+function removePreviousResults(){
+    $('#Who p').remove();
 }
 
 function callback(results, status) {
