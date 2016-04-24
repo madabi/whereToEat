@@ -1,6 +1,6 @@
 var map;
 var infowindow;
-var startLocation;
+var pos = {lat: -33.867, lng: 151.195};
 var service;
 
 jQuery(document).ready(function(){
@@ -14,19 +14,21 @@ jQuery(document).ready(function(){
     var where = $('#Where');
     var who = $('#Who');
 
+
+
     showSection(where);
     setActive(whereButton);
-    
+
     whereButton.on('click', function(){
         showSection(where);
         setActive(this);
     });
-    
+
     whatButton.on('click', function(){
         showSection(what);
         setActive(this);
     });
-        
+
     whoButton.on('click', function(){
         showSection(who);
         setActive(this);
@@ -37,7 +39,7 @@ jQuery(document).ready(function(){
 
         showSection(where);
         setActive(whereButton);
-        
+
         if(document.getElementById('it').checked) {
             removePreviousResults();
             initMap('italienisch');
@@ -68,42 +70,37 @@ function showSection(section){
 }
 
 function initMap(foodtype) {
-    var pyrmont = {lat: -33.867, lng: 151.195};
-    var basel = {lat: 47.559417, lng:7.584503 };
 
     map = new google.maps.Map(document.getElementById('map'), {
-        center: basel, //<-------- !!
-        zoom: 14
+        center: pos,
+        zoom: 16
     });
-        
-    if (navigator.geolocation) {
-        startLocation = basel;
-    } else {
-        startLocation = pyrmont;
-    }
-    map.setCenter(startLocation);
-
     infowindow = new google.maps.InfoWindow();
-    
+
     // Try HTML5 geolocation.
-    /*if (navigator.geolocation) {
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
+            infowindow.setPosition(pos);
+            infowindow.setContent('Location found.');
             map.setCenter(pos);
+
+            initMarkers(foodtype);
         }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
+            handleLocationError(true, infowindow, map.getCenter());
         });
     } else {
         // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }*/
-    
+        handleLocationError(false, infowindow, map.getCenter(), foodtype);
+    }
+
+
+}
+
+function initMarkers(foodtype){
     service = new google.maps.places.PlacesService(map);
 
     if (foodtype === 'chinesisch'){
@@ -119,16 +116,16 @@ function initMap(foodtype) {
 }
 
 function displayDefault(){
-        service.nearbySearch({
-        location: startLocation, //<----- !!
+    service.nearbySearch({
+        location: pos,
         radius: 400,
         types: ['restaurant']
     }, callback);
 }
 
 function searchFor(foodtype){
-        service.nearbySearch({
-        location: startLocation, //<----- !!
+    service.nearbySearch({
+        location: pos,
         radius: 400,
         types: ['restaurant'],
         keyword: foodtype
@@ -161,16 +158,18 @@ function createMarker(place) {
         infowindow.open(map, this);
     });
 }
-/*
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
+
+function handleLocationError(browserHasGeolocation, infowindow, pos, foodtype) {
+    infowindow.setPosition(pos);
+    /*infowindow.setContent(browserHasGeolocation ?
+     'Error: The Geolocation service failed.' :
+     'Error: Your browser doesn\'t support geolocation.');*/
+    alert("Ihr Standort konnte leider nicht ermittelt werden. Wie wärs mit Sidney?");
+    initMarkers(foodtype);
 }
 
 
-*/
+
 
 
 
